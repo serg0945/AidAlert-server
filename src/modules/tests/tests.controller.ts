@@ -4,8 +4,8 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
-  Put,
   Query,
 } from '@nestjs/common';
 import { CreateTestDto, UpdateTestDto } from 'modules/tests/dtos/create.dto';
@@ -42,7 +42,7 @@ export class TestsController {
     await this.testsService.create(dto);
   }
 
-  @Put()
+  @Patch()
   async put(@Body() dto: UpdateTestDto): Promise<void> {
     await this.testsService.put(dto);
   }

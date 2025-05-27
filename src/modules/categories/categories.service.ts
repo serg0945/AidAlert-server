@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { CreateCategoryDto } from 'modules/categories/dtos/createCategory.dto';
+import { UpdateCategoryDto } from 'modules/categories/dtos/udpateCategory.dto';
 import {
   Category,
   CategoryDocument,
@@ -16,7 +17,7 @@ export class CategoriesService {
   ) {}
 
   async get(): Promise<Category[]> {
-    return await this.categoriesModel.find().lean();
+    return await this.categoriesModel.find().sort({ name: 1 }).lean();
   }
 
   async getById(byId: string): Promise<Nullable<Category>> {
@@ -26,6 +27,10 @@ export class CategoriesService {
   async create(body: CreateCategoryDto): Promise<void> {
     const createdArticle = new this.categoriesModel(body);
     await createdArticle.save();
+  }
+
+  async update(_id: string, dto: UpdateCategoryDto) {
+    await this.categoriesModel.findByIdAndUpdate(_id, dto);
   }
 
   async delete(_id: string): Promise<void> {

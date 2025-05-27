@@ -97,7 +97,6 @@ export class PostsController {
       title: body.title,
       owner: body.owner,
       content: body.content,
-      imageFileNames: [],
     };
 
     if (images && images.length > 0) {
@@ -117,7 +116,9 @@ export class PostsController {
       storage: diskStorage({
         destination: './uploads',
         filename: (_, file, cb) => {
-          cb(null, extname(file.originalname));
+          const uniqueSuffix =
+            Date.now() + '-' + Math.round(Math.random() * 1e9);
+          cb(null, uniqueSuffix + extname(file.originalname));
         },
       }),
     }),

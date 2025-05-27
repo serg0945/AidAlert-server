@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as fs from 'fs';
 
-function getMimeType(filePath: string): string {
+function getMimeType(filePath: string) {
   const ext = path.extname(filePath).toLowerCase();
   switch (ext) {
     case '.jpg':
@@ -11,8 +11,8 @@ function getMimeType(filePath: string): string {
       return 'image/png';
     case '.gif':
       return 'image/gif';
-    default:
-      return 'application/octet-stream';
+    case '.svg':
+      return 'image/svg+xml';
   }
 }
 

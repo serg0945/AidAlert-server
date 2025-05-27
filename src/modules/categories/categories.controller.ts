@@ -1,9 +1,12 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
   Get,
+  Logger,
   Param,
+  Patch,
   Post,
   Res,
   UploadedFile,
@@ -83,11 +86,39 @@ export class CategoriesController {
     @Body() dto: CreateCategoryDto,
     @UploadedFile() image: Express.Multer.File,
   ) {
-    const newArticleData = {
-      name: dto.name,
-      imageFileName: image.filename,
+    if (image) {
+      const newArticleData = {
+        name: dto.name,
+        imageFileName: image.filename,
+      };
+
+      await this.categoriesService.create(newArticleData);
+    } else {
+      throw new BadRequestException('Картинка обязательна!');
+    }
+  }
+
+  @Patch()
+  @UseInterceptors(
+    FileInterceptor('image', {
+      storage: diskStorage({
+        destination: './uploads',
+        filename: (_, file, cb) => {
+          const uniqueSuffix =
+            Date.now() + '-' + Math.round(Math.random() * 1e9);
+          cb(null, uniqueSuffix + extname(file.originalname));
+        },
+      }),
+    }),
+  )
+  async update(@Body() body: any, @UploadedFile() image: Express.Multer.File) {
+    const newArticleData: any = {
+      name: body.name,
     };
 
-    await this.categoriesService.create(newArticleData);
+    if (image) {
+      newArticleData.imageFileName = image.filename;
+    }
+    return this.categoriesService.update(body._id, newArticleData);
   }
 }
