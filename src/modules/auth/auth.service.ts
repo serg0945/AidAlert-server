@@ -5,23 +5,14 @@ import { LoginDto } from 'modules/auth/dtos/loginDto.dto';
 import { Auth, AuthDocument } from 'modules/auth/schemas/auth.schema';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  constructor(@InjectModel(Auth.name) private authModel: Model<AuthDocument>) {}
-
-  async checkPass(): Promise<boolean> {
-    const user = await this.authModel.findOne();
-    const dateLoginString = user?.dateLogin as string;
-    const dateLogin = new Date(dateLoginString);
-    const now = new Date();
-
-    const differenceInMilliseconds = Math.abs(
-      now.getTime() - dateLogin.getTime(),
-    );
-    const differenceInDays = differenceInMilliseconds / (1000 * 60 * 60 * 24);
-    return differenceInDays < 1;
-  }
+  constructor(
+    @InjectModel(Auth.name) private authModel: Model<AuthDocument>,
+    private readonly jwtService: JwtService,
+  ) {}
 
   async create(dto: CreateAuthDto): Promise<void> {
     const hashedPassword = await bcrypt.hash(dto.password, 10);
@@ -29,21 +20,25 @@ export class AuthService {
     await auth.save();
   }
 
-  async login(dto: LoginDto): Promise<void> {
+  async login(dto: LoginDto): Promise<{ access_token: string }> {
     const user = await this.authModel.findOne({ username: dto.username });
 
     if (!user) {
-      throw new UnauthorizedException('В базе нет администратора');
+      throw new UnauthorizedException('Неверный логин или пароль');
     }
 
     const isPasswordValid = await bcrypt.compare(dto.password, user.password);
 
     if (isPasswordValid) {
-      await this.authModel.findByIdAndUpdate(user._id, {
-        dateLogin: new Date(),
-      });
+      return {
+        access_token: this.jwtService.sign(dto),
+      };
     } else {
       throw new UnauthorizedException('Неверный логин или пароль');
     }
+  }
+
+  async getByName(dto: any): Promise<any> {
+    return await this.authModel.findOne({ username: dto.username });
   }
 }

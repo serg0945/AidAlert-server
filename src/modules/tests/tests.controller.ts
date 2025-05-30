@@ -7,7 +7,9 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from 'modules/auth/jwt.guard';
 import { CreateTestDto, UpdateTestDto } from 'modules/tests/dtos/create.dto';
 import { Test } from 'modules/tests/schemas/tests.schema';
 import { TestsService } from 'modules/tests/tests.service';
@@ -32,16 +34,19 @@ export class TestsController {
     return await this.testsService.getByCategoryId(_id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':_id')
   async delete(@Param('_id') _id: string): Promise<void> {
     await this.testsService.delete(_id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   async create(@Body() dto: CreateTestDto): Promise<void> {
     await this.testsService.create(dto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch()
   async put(@Body() dto: UpdateTestDto): Promise<void> {
     await this.testsService.put(dto);

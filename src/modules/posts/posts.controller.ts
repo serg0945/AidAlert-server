@@ -10,6 +10,7 @@ import {
   Query,
   Delete,
   Param,
+  UseGuards,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { Post as PostSchema } from 'modules/posts/schemas/post.schema';
@@ -23,6 +24,7 @@ import { Response } from 'express';
 import { convertToBase64 } from 'shared/utils';
 import { CreatePostDto } from 'modules/posts/dtos/create.dto';
 import { UpdatePostDto } from 'modules/posts/dtos/update.dto';
+import { JwtAuthGuard } from 'modules/auth/jwt.guard';
 
 @Controller('/posts')
 export class PostsController {
@@ -45,6 +47,7 @@ export class PostsController {
     return await this.postsService.getByCategoryId(_id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':_id')
   async delete(@Param('_id') _id: string): Promise<void> {
     await this.postsService.delete(_id);
@@ -76,6 +79,7 @@ export class PostsController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch()
   @UseInterceptors(
     FilesInterceptor('images', 10, {
@@ -110,6 +114,7 @@ export class PostsController {
     return this.postsService.update(body._id, newArticleData);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   @UseInterceptors(
     FilesInterceptor('images', 10, {

@@ -10,9 +10,6 @@ export class Auth {
 
   @Prop()
   readonly password: string;
-
-  @Prop()
-  readonly dateLogin: string;
 }
 
 export const AuthSchema = SchemaFactory.createForClass(Auth);
