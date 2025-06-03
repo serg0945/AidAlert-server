@@ -13,7 +13,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
-import { Post as PostSchema } from 'modules/posts/schemas/post.schema';
+import { Post as PostSchema } from './schemas/post.schema';
 import { Nullable } from 'shared/types';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
@@ -22,8 +22,8 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { Response } from 'express';
 import { convertToBase64 } from 'shared/utils';
-import { CreatePostDto } from 'modules/posts/dtos/create.dto';
-import { UpdatePostDto } from 'modules/posts/dtos/update.dto';
+import { CreatePostDto } from './dtos/create.dto';
+import { UpdatePostDto } from './dtos/update.dto';
 import { JwtAuthGuard } from 'modules/auth/jwt.guard';
 
 @Controller('/posts')

@@ -13,9 +13,9 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { CategoriesService } from 'modules/categories/categories.service';
-import { CreateCategoryDto } from 'modules/categories/dtos/createCategory.dto';
-import { Category } from 'modules/categories/schemas/category.schema';
+import { CategoriesService } from './categories.service';
+import { CreateCategoryDto } from './dtos/createCategory.dto';
+import { Category } from './schemas/category.schema';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { Nullable } from 'shared/types';

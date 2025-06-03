@@ -10,9 +10,9 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { JwtAuthGuard } from 'modules/auth/jwt.guard';
-import { CreateTestDto, UpdateTestDto } from 'modules/tests/dtos/create.dto';
-import { Test } from 'modules/tests/schemas/tests.schema';
-import { TestsService } from 'modules/tests/tests.service';
+import { CreateTestDto, UpdateTestDto } from './dtos/create.dto';
+import { Test } from './schemas/tests.schema';
+import { TestsService } from './tests.service';
 import { Nullable } from 'shared/types';
 
 @Controller('/tests')

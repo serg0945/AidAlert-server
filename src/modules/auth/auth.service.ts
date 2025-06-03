@@ -1,8 +1,8 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { CreateAuthDto } from 'modules/auth/dtos/createAuth.dto';
-import { LoginDto } from 'modules/auth/dtos/loginDto.dto';
-import { Auth, AuthDocument } from 'modules/auth/schemas/auth.schema';
+import { CreateAuthDto } from './dtos/createAuth.dto';
+import { LoginDto } from './dtos/loginDto.dto';
+import { Auth, AuthDocument } from './schemas/auth.schema';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';

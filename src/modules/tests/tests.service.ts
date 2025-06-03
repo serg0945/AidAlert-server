@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Test, TestDocument } from './schemas/tests.schema';
 import { Nullable } from 'shared/types/types';
-import { CreateTestDto, UpdateTestDto } from 'modules/tests/dtos/create.dto';
+import { CreateTestDto, UpdateTestDto } from './dtos/create.dto';
 
 @Injectable()
 export class TestsService {

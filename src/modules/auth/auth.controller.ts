@@ -8,10 +8,10 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { AuthService } from 'modules/auth/auth.service';
-import { CreateAuthDto } from 'modules/auth/dtos/createAuth.dto';
-import { LoginDto } from 'modules/auth/dtos/loginDto.dto';
-import { JwtAuthGuard } from 'modules/auth/jwt.guard';
+import { AuthService } from './auth.service';
+import { CreateAuthDto } from './dtos/createAuth.dto';
+import { LoginDto } from './dtos/loginDto.dto';
+import { JwtAuthGuard } from './jwt.guard';
 
 @Controller('/auth')
 export class AuthController {

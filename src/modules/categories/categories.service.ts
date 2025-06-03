@@ -1,11 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { CreateCategoryDto } from 'modules/categories/dtos/createCategory.dto';
-import { UpdateCategoryDto } from 'modules/categories/dtos/udpateCategory.dto';
-import {
-  Category,
-  CategoryDocument,
-} from 'modules/categories/schemas/category.schema';
+import { CreateCategoryDto } from './dtos/createCategory.dto';
+import { UpdateCategoryDto } from './dtos/udpateCategory.dto';
+import { Category, CategoryDocument } from './schemas/category.schema';
 import { Model } from 'mongoose';
 import { Nullable } from 'shared/types';
 
