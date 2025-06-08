@@ -57,6 +57,7 @@ export class CategoriesController {
       const base64Images = await Promise.all(
         filePaths.map((filePath) => convertToBase64(filePath)),
       );
+      Logger.log(base64Images);
       res.json(base64Images);
     } catch {
       return res.status(500).send('Ошибка конвертации изображения');
