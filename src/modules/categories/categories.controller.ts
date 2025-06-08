@@ -4,7 +4,6 @@ import {
   Controller,
   Delete,
   Get,
-  Logger,
   Param,
   Patch,
   Post,
@@ -46,18 +45,15 @@ export class CategoriesController {
     );
 
     const filesExist = filePaths.every((filePath) => fs.existsSync(filePath));
-    Logger.log(filePaths);
-    Logger.log(process.cwd());
 
-    // if (!filesExist) {
-    //   return res.status(404).send('Файлы не были найдены');
-    // }
+    if (!filesExist) {
+      return res.status(404).send('Файлы не были найдены');
+    }
 
     try {
       const base64Images = await Promise.all(
         filePaths.map((filePath) => convertToBase64(filePath)),
       );
-      Logger.log(base64Images);
       res.json(base64Images);
     } catch {
       return res.status(500).send('Ошибка конвертации изображения');
