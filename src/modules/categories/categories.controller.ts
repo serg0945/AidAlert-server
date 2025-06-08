@@ -4,6 +4,7 @@ import {
   Controller,
   Delete,
   Get,
+  Logger,
   Param,
   Patch,
   Post,
@@ -45,6 +46,8 @@ export class CategoriesController {
     );
 
     const filesExist = filePaths.every((filePath) => fs.existsSync(filePath));
+    Logger.log(filePaths);
+    Logger.log(process.cwd());
 
     if (!filesExist) {
       return res.status(404).send('Файлы не были найдены');
