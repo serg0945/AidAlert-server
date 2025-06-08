@@ -49,9 +49,9 @@ export class CategoriesController {
     Logger.log(filePaths);
     Logger.log(process.cwd());
 
-    if (!filesExist) {
-      return res.status(404).send('Файлы не были найдены');
-    }
+    // if (!filesExist) {
+    //   return res.status(404).send('Файлы не были найдены');
+    // }
 
     try {
       const base64Images = await Promise.all(
