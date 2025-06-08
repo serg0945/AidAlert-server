@@ -7,6 +7,7 @@ import { CategoriesModule } from 'modules/categories/categories.module';
 import { TestsModule } from 'modules/tests/tests.module';
 import { AuthModule } from 'modules/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import 'dotenv/config';
 
 @Module({
   imports: [
