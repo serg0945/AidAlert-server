@@ -6,10 +6,14 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { CategoriesModule } from 'modules/categories/categories.module';
 import { TestsModule } from 'modules/tests/tests.module';
 import { AuthModule } from 'modules/auth/auth.module';
-import 'dotenv/config';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: '.env',
+    }),
     MongooseModule.forRoot(process.env.MONGO_CONNECT as string),
     PostsModule,
     AuthModule,
